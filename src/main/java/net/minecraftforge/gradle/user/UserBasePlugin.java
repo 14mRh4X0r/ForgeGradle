@@ -169,6 +169,7 @@ public abstract class UserBasePlugin extends BasePlugin<UserExtension> implement
             public void execute(Task arg0)
             {
                 readAndApplyJson(delayedFile(UserConstants.JSON).call(), UserConstants.CONFIG, UserConstants.CONFIG_NATIVES);
+                findChangelog();
             }
         });
 
@@ -291,6 +292,7 @@ public abstract class UserBasePlugin extends BasePlugin<UserExtension> implement
         if (delayedFile(UserConstants.JSON).call().exists())
         {
             readAndApplyJson(delayedFile(UserConstants.JSON).call(), UserConstants.CONFIG, UserConstants.CONFIG_NATIVES);
+            findChangelog();
         }
 
         // extract userdev
@@ -420,6 +422,28 @@ public abstract class UserBasePlugin extends BasePlugin<UserExtension> implement
             handler.add(nativeConfig, dep);
         
         hasApplied = true;
+    }
+    
+    private void findChangelog()
+    {
+        File dir = delayedFile(UserConstants.PACK_DIR).call();
+        
+        if (!dir.exists())
+            return;
+        
+        File[] files = dir.listFiles();
+        for (File file : files)
+        {
+            if (file.getName().contains("changelog"))
+            {
+                // found the changelog...
+                String[] split = file.getName().split("-");
+                UserExtension ext = getExtension();
+                ext.apiVersion = split[2];
+                break;
+            }
+        }
+        
     }
 
     @Override

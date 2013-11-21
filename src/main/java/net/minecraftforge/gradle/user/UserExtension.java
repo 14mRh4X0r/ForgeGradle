@@ -17,7 +17,7 @@ public class UserExtension extends BaseExtension
     //private static final Pattern VERSION_CHECK = Pattern.compile("(?:[\\w\\d.-]+):(?:[\\w\\d-]+):([\\d.]+)-([\\d.]+)-(?:[\\w\\d.]+)");
     private static final Pattern VERSION_CHECK = Pattern.compile("([\\d.]+)-([\\w\\d.]+)(?:-[\\w\\d.]+)?");
     
-    private String apiVersion;
+    String apiVersion;
     private ArrayList<Object> ats = new ArrayList<Object>(); 
     
     public UserExtension(Project project)
